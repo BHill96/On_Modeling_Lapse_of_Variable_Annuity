@@ -5,7 +5,7 @@ import numpy as np
 from scipy.stats import binom
 
 """
-Function ERExpectedUB
+Function ExpectedUB
 Calculates expected benefits with expected returns utility function
 Input: t0 = the beginning of the policy 
        t2 = last chance to lapse
@@ -19,11 +19,11 @@ Input: t0 = the beginning of the policy
        S0 = initial payment
        q = percentage of the initial payment for the cash payout
 """
-def ERExpectedUB(alpha, beta, S0, q, t, r, q3, q4, dt, rho):
+def ExpectedUB(alpha, beta, S0, q, t, r, q3, q4, dt, rho):
     return (alpha*q*S0+beta)*(1-exp(-rho*(t[5]-t[2]))-(exp(-rho*(t[3]-t[2]))-exp(-rho*(t[5]-t[2])))*q3
                        -(exp(-rho*(t[4]-t[2]))-exp(-rho*(t[5]-t[2])))*q4)/(exp(dt)-1)
     
-def ERBoundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t1, t2):
+def Boundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t1, t2):
     B = []
     # Case 1
     tmp = K*exp(-rho*(t2-t1))-beta
@@ -62,7 +62,7 @@ def ERBoundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t1, t2):
 
     return np.array(lapseIntervals)
 
-""" Function ERLapseBoundary
+""" Function LapseBoundary
     Input: r - interest forward rate 
     lambd - customer preference forward rate
     sigma - variance of equity 
@@ -76,10 +76,10 @@ def ERBoundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t1, t2):
     Returns: A function taking in a timestep t relative to the start of the policy in years, and outputs the predicted value of S.
              If the actual S value is higher than the predicted value, the policy holder will lapse
 """ 
-def ERLapseBoundary(S0, r, lambd, sigma, dt, alpha, beta, N, rho, t, q, Q):
-    K = ERExpectedUB(r=r, t=t, q3=Q[0], q4=Q[1], beta=beta, alpha=alpha, S0=S0, q=q, rho=rho, dt=dt)
+def LapseBoundary(S0, r, lambd, sigma, dt, alpha, beta, N, rho, t, q, Q):
+    K = ExpectedUB(r=r, t=t, q3=Q[0], q4=Q[1], beta=beta, alpha=alpha, S0=S0, q=q, rho=rho, dt=dt)
     # Boundary at t1
-    t1Boundary = ERBoundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t[1], t[2])
+    t1Boundary = Boundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t[1], t[2])
     # Boundary at t2
     t2Boundary = (K-beta/alpha)
     return [t1Boundary, t2Boundary]

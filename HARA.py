@@ -17,7 +17,7 @@ from scipy.stats import binom
     # S0 = initial payment
     # q = percentage of the initial payment the policyholder gets every period
 # Returns the expected utility at t2 of the forecoming payments
-def HaraExpectedUB(t0, t2, t3, t4, t5, q3, q4, deltaT, alpha, rho, S0, q):
+def ExpectedUB(t0, t2, t3, t4, t5, q3, q4, deltaT, alpha, rho, S0, q):
   # see 2.24 in paper
   return ((q*S0)**alpha)*(1-exp(-rho*(t5-t2))-(exp(-rho*(t3-t2))-exp(-rho*(t5-t2)))*q3
                        -(exp(-rho*(t4-t2))-exp(-rho*(t5-t2)))*q4)/(exp(deltaT)-1)

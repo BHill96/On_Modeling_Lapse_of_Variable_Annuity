@@ -86,7 +86,7 @@ def Boundary1(r, lambd, sigma, dt, alpha, N, K, rho, t1, t2):
              If the actual S value is higher than the predicted value, the policy holder will lapse
 """ 
 def LapseBoundary(S0, r, lambd, sigma, dt, alpha, N, rho, t, q, Q):
-    K = HaraExpectedUB(t[0], t[2], t[3], t[4], t[5], Q[0], Q[1], dt, alpha, rho, S0, q)
+    K = ExpectedUB(t[0], t[2], t[3], t[4], t[5], Q[0], Q[1], dt, alpha, rho, S0, q)
     # Boundary at t1
     t1Boundary = Boundary1(r, lambd, sigma, dt, alpha, N, K, rho, t[1], t[2])
     # Boundary at t2

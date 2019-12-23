@@ -32,7 +32,7 @@ def Boundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t1, t2):
 
     # Case 2
     tmp = beta*(exp(-rho*(t2-t1))-1)/(1-exp(r+lambd*sigma-rho)*(t2-t1))
-    if rho<r+lambd*sigma and (K-B)*exp(N*sigma*np.sqrt(dt))<=tmp:
+    if rho<r+lambd*sigma and (K-beta)*exp(N*sigma*np.sqrt(dt))<=tmp:
         # is the second part right?
         B.append([beta*(exp(-rho(t2-t1))-1)/(1-exp(r+lambd*sigma-rho)(t2-t1)), np.inf])
     
@@ -81,5 +81,5 @@ def LapseBoundary(S0, r, lambd, sigma, dt, alpha, beta, N, rho, t, q, Q):
     # Boundary at t1
     t1Boundary = Boundary1(alpha, beta, r, lambd, sigma, dt, N, K, rho, t[1], t[2])
     # Boundary at t2
-    t2Boundary = (K-beta/alpha)
+    t2Boundary = (K-beta)/alpha
     return [t1Boundary, t2Boundary]
